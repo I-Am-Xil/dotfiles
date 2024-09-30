@@ -1,0 +1,401 @@
+* {
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+
+window#waybar {
+    background-color: rgba(43, 48, 59, 0.0);
+    color: #ffffff;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+
+window#waybar.empty {
+    background-color: transparent;
+}
+window#waybar.solo {
+    background-color: #FFFFFF;
+}
+
+
+window#waybar.termite {
+    background-color: #3F3F3F;
+}
+
+window#waybar.chromium {
+    background-color: #000000;
+    border: none;
+}
+
+button {
+    /* Use box-shadow instead of border so the text isn't offset */
+    box-shadow: inset 0 -3px transparent;
+    /* Avoid rounded borders under each button name */
+    border: none;
+    border-radius: 0;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+button:hover {
+    background: inherit;
+    box-shadow: inset 0 -3px #ffffff;
+}
+
+/* you can set a style on hover for any module like this 
+#pulseaudio:hover {
+    background-color: #a37800;
+}
+*/
+
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    color: #ffffff;
+}
+
+#workspaces button:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#workspaces button.focused {
+    background-color: #64727D;
+    box-shadow: inset 0 -3px #ffffff;
+}
+
+#workspaces button.urgent {
+    background-color: #eb4d4b;
+}
+
+#mode {
+    background-color: #64727D;
+    box-shadow: inset 0 -3px #ffffff;
+}
+
+#power,
+#clock,
+#battery,
+#disk,
+#temperature,
+#backlight,
+#hardware,
+#audio,
+#internet,
+#wireplumber,
+#custom-media,
+#custom-spotify,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#power-profiles-daemon,
+#mpd {
+    color: #ffffff;
+}
+
+#power,
+#battery,
+#backlight,
+#hardware,
+#internet,
+#audio {
+    padding: 0 6px;
+}
+
+#custom-spotify {
+    padding-left: 7px;
+}
+
+#window,
+#workspaces {
+    margin: 0 4px;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right > widget:last-child > #workspaces {
+    margin-right: 0;
+}
+
+.modules-right {
+    padding-right: 5px;
+}
+
+#clock:hover {
+    color: #dbe4ee;
+    text-shadow: 0 0 2px #dbe4ee;
+}
+
+#battery:hover {
+    color: #dbe4ee;
+    text-shadow: 0 0 2px #dbe4ee;
+}
+
+#battery.warning {
+    color: #f29900;
+    text-shadow: 0 0 2px #f29900;
+}
+
+#battery.charging, #battery.plugged, #battery.full {
+    color: #04bd35;
+    text-shadow: 0 0 2px #04bd35;
+}
+
+@keyframes blink {
+    to {
+        color: #ffffff;
+	text-shadow: 0 0 0px #f53c3c;
+    }
+}
+
+/* Using steps() instead of linear as a timing function to limit cpu usage */
+#battery.critical:not(.charging) {
+    color: #f53c3c;
+    text-shadow: 0 0 2px #f53c3c;
+    animation-name: blink;
+    animation-duration: 0.7s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#power-profiles-daemon {
+    padding-right: 15px;
+}
+
+#power-profiles-daemonsolid.performance {
+    background-color: #f53c3c;
+    color: #ffffff;
+}
+
+#power-profiles-daemon.balanced {
+    background-color: #2980b9;
+    color: #ffffff;
+}
+
+#power-profiles-daemon.power-saver {
+    background-color: #2ecc71;
+    color: #000000;
+}
+
+label:focus {
+    background-color: #000000;
+}
+
+#cpu {
+    padding-right: 20px;
+}
+
+#memory {
+    padding-right: 5px;
+}
+
+#hardware {
+}
+
+#hardware:hover > widget > #memory {
+    color: #ea00d9;
+    text-shadow: 0 0 2px #ea00d9;
+}
+
+#hardware:hover > widget > #cpu {
+    color: #39ff14;
+    text-shadow: 0 0 2px #39ff14;
+}
+
+#disk {
+}
+
+#backlight {
+    padding-right: 5px;
+}
+
+#backlight:hover {
+    color: #ffffff;
+    text-shadow: 0 0 2px #d1c5c0;
+}
+
+#network {
+}
+
+#internet{
+    color: #ffffff;
+}
+
+#internet:hover {
+    color: #1ac5b0;
+    text-shadow: 0 0 2px #1ac5b0;
+}
+
+#network.disabled, #network.disconnected {
+    color: red;
+    text-shadow: 0 0 2px #ff0000;
+}
+
+#network.network2 {
+     padding-right: 10px;
+}
+
+#audio {
+}
+
+#audio:hover {
+    color: #fdf500;
+    text-shadow: 0 0 2px #fdf500;
+}
+
+#pulseaudio {
+    padding-right: 10px;
+}
+
+#pulseaudio.audio2 {
+}
+
+#pulseaudio.muted {
+    color: red;
+}
+
+#wireplumber {
+}
+
+#wireplumber.muted {
+}
+
+#custom-media {
+}
+
+#custom-media.custom-spotify {
+}
+
+#custom-media.custom-vlc {
+}
+
+#custom-spotify {
+}
+
+#custom-spotify:hover {
+    color: #39ff13;
+    text-shadow: 0 0 2px #39ff13;
+}
+
+#power {
+    border-radius: 17px;	
+    background-color: #0f0c11;
+}
+
+#custom-shutdown {
+    padding: 5px;
+    padding-left: 10px;
+}
+
+#custom-lock {
+    padding: 5px;
+}
+
+#custom-reboot {
+    padding: 5px;
+    padding-right: 10px;
+}
+
+#custom-shutdown:hover {
+/*    only top colored inner shadow
+ *    box-shadow: inset 0 10px 5px red,  inset 0 -20px 6px #000000;*/
+
+    color: red;
+    text-shadow: 0 0 2px #f53c3c;
+}
+
+#custom-lock:hover {
+    color: #fdf500;
+    text-shadow: 0 0 2px #fdf500;
+}
+
+#custom-reboot:hover {
+    color: #49d5e2;
+    text-shadow: 0 0 2px #49d5e2;
+}
+
+#group-pilltest {
+}
+
+#custom-pill {
+}
+
+#temperature {
+}
+
+#temperature.critical {
+}
+
+#tray {
+    background-color: rgba(255, 255, 255, 1.0);
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: #eb4d4b;
+}
+
+#idle_inhibitor {
+}
+
+#idle_inhibitor.activated {
+}
+
+#mpd {
+}
+
+#mpd.disconnected {
+}
+
+#mpd.stopped {
+}
+
+#mpd.paused {
+}
+
+#language {
+}
+
+#keyboard-state {
+}
+
+#keyboard-state > label {
+}
+
+#keyboard-state > label.locked {
+}
+
+#scratchpad {
+}
+
+#scratchpad.empty {
+}
+
+#privacy {
+}
+
+#privacy-item {
+}
+
+#privacy-item.screenshare {
+}
+
+#privacy-item.audio-in {
+}
+
+#privacy-item.audio-out {
+}

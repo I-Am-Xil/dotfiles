@@ -1,0 +1,420 @@
+{
+    "for": {
+        "prefix": "for",
+        "body": [
+            "for(int $2 = 0; $2 < 1; $2++){",
+            "\t",
+            "}"
+        ],
+        "description": "for( ; ; ){\n\t//code\n}\n\nThe keyword for is used to describe a loop that is controlled by a counter. The parentheses enclose three expressions that initialize, check and update the variable used as counter. The body defined by curly braces encloses the statements that are executed at each pass of the loop.\n\nfor(int i = 0; i <= 99; i++){\n\taFunction();\n}\n\nThe execution of a single pass or the whole loop can be aborted by using a continue or a break statement respectively."
+    },
+
+    "while": {
+        "prefix": "while",
+        "body": [
+            "while($2){",
+            "\t",
+            "}"
+        ],
+        "description": "while(){\n\t//code\n}\n\nThe keyword while is used to describe a loop that is controlled by a condition. The parentheses enclose the expression that defines the condition. The body defined by curly braces encloses the statements that are executed at each pass of the loop.\n\nwhile(i <= 99){\n\taFunction();\n}\n\nThe execution of a single pass or the whole loop can be aborted by using a continue or a break statement respectively."
+    },
+
+    "dowhile": {
+        "prefix": "dowhile",
+        "body": [
+            "do{",
+            "\t",
+            "} while($2){",
+            "\t",
+            "}"
+        ],
+        "description": "do {\n\t//code\n}while();\n\nThe keyword do is used in combination with while to describe a loop that is controlled by a condition. The body defined by curly braces encloses the statements that are executed at each pass of the loop. The parentheses enclose the expression that defines the condition.\n\ndo {\n\taFunction();\n} while(i <= 99);\n\nThe execution of a single pass or the whole loop can be aborted by using a continue or a break statement respectively.\n\nIn contrast to a simple while loop the body is always executed at least one time even if the expression evaluates to false from the beginning."
+    },
+
+    "ifdef": {
+        "prefix": "ifdef",
+        "body": [
+            "#ifdef GL_ES",
+            "precision mediump float;",
+            "#endif"
+        ],
+        "description": "A check defining if GLES is available"
+    },
+
+    "PI": {
+        "prefix": "PI",
+        "body": [
+            "const float PI = 3.14159265359;"
+        ],
+        "description": "PI setup"
+    },
+
+    "Rand": {
+        "prefix": "Rand",
+        "body": [
+            "float Rand(float seed){",
+            "\treturn fract(sin(seed)*100000.);",
+            "}"
+        ],
+        "description": "Random function"
+    },
+
+    "Rand2": {
+        "prefix": "Rand2",
+        "body": [
+            "float Rand2(float seed){",
+            "\tfloat p = fract(sin(seed)*100000.);",
+            "\treturn p*p;",
+            "}"
+        ],
+        "description": "Random function"
+    },
+
+    "Rand3": {
+        "prefix": "Rand3",
+        "body": [
+            "float Rand3(float seed){",
+            "\treturn sqrt(fract(sin(seed)*100000.));",
+            "}"
+        ],
+        "description": "Random function"
+    },
+
+    "Rand4": {
+        "prefix": "Rand4",
+        "body": [
+            "float Rand4(float seed){",
+            "\tfloat p = fract(sin(seed)*100000.);",
+            "\treturn p*p*p*p*p;",
+            "}"
+        ],
+        "description": "Random function"
+    },
+
+    "Rand2D": {
+        "prefix": "Rand2D",
+        "body": [
+            "float Rand2D(vec2 uv){",
+            "\treturn fract(sin(dot(uv.xy, vec2(12.9898, 78.233))) * 43758.5453);",
+            "}"
+        ],
+        "description": "Random 2d function"
+    },
+
+    "Noise1D": {
+        "prefix": "Noise1D",
+        "body": [
+            "float Noise1D(float v){",
+            "\treturn cos(v + cos(v * 90.1415) * 100.1415) * 0.5 + 0.5;",
+            "}"
+        ],
+        "description": "noise1d function"
+    },
+
+    "simple setup": {
+        "prefix": "setup",
+        "body": [
+            "#version 460",
+            "#ifdef GL",
+            "precision mediump float;",
+            "#endif",
+            "",
+            "out vec4 fragColor;",
+            "",
+            "uniform float u_time;",
+            "uniform vec2 u_resolution;",
+            "uniform vec2 u_mouse;",
+            "",
+            "void main(){",
+            "\tvec2 uv = (2.0 * gl_FragCoord.xy - u_resolution) / u_resolution.y;",
+            "\tvec3 color = vec3(0.0);",
+            "",
+            "\tfragColor = vec4(color, 1.0);",
+            "}"
+        ],
+        "description": "Starter code for version 460"
+    },
+
+    "Circle": {
+        "prefix": "Circle",
+        "body": [
+            "float Circle(vec2 uv, float scale, float blur){",
+            "\treturn smoothstep(scale + blur, scale - blur, length(uv));",
+            "}"
+        ],
+        "description": "Draws a circle shape"
+    },
+
+    "Circunference": {
+        "prefix": "Circunference",
+        "body": [
+            "float Circunference(vec2 uv, float scale, float thickness, float blur){",
+            "\tfloat circunference = Circle(uv, scale, blur);",
+            "\tcircunference -= Circle(uv, scale - thickness, blur);",
+            "\treturn circunference;",
+            "}"
+        ],
+        "description": "Draws a hollow circle shape"
+    },
+
+    "Arc": {
+        "prefix": "Arc",
+        "body": [
+            "float Arc(vec2 uv, vec2 scale, float thickness, vec4 blur){",
+            "\tfloat r = length(uv);",
+            "\tfloat theta = atan(uv.y, uv.x);",
+            "\tuv = vec2(r, theta);",
+
+            "\tfloat arc = Rectangle(uv, scale + vec2(thickness, 0.), blur);",
+            "\tarc -= Rectangle(uv, scale, blur);",
+            "",
+            "\treturn arc;",
+            "}"
+        ],
+        "description": "Draws a circunference section"
+    },
+
+    "Band": {
+        "prefix": "Band",
+        "body": [
+            "float Band(float scale, vec2 blur, float axis){",
+            "\taxis += 0.5;",
+            "\tscale += 0.5;",
+            "\tfloat s1 = smoothstep(scale + blur.x, scale - blur.x, axis);",
+            "\tfloat s2 = smoothstep(scale + blur.y, scale - blur.y, 1.-axis);",
+            "\treturn s1*s2;",
+            "}"
+        ],
+        "description": "Draws a band around the uv axis"
+    },
+
+    "Rectangle": {
+        "prefix": "Rectangle",
+        "body": [
+            "float Rectangle(vec2 uv, vec2 scale, vec4 blur){",
+            "\tfloat xBand = Band(scale.x, blur.xz, uv.x);",
+            "\tfloat yBand = Band(scale.y, blur.yw, uv.y);",
+            "\treturn xBand * yBand;",
+            "}"
+        ],
+        "description": "Draws a rectangle shape"
+    },
+
+    "RectanglePerimeter": {
+        "prefix": "RectanglePerimeter",
+        "body": [
+            "float RectanglePerimeter(vec2 uv, vec2 scale, float thickness, vec4 blur){",
+            "\tfloat rect = Rectangle(uv, scale, blur);",
+            "\trect -= Rectangle(uv, scale - vec2(thickness), blur);",
+            "\treturn rect;",
+            "}"
+        ],
+        "description": "Draws a hollow rectangle shape"
+    },
+
+    "Cross": {
+        "prefix": "Cross",
+        "body": [
+            "float Cross(vec2 uv, vec2 scale, float blur){",
+            "\tfloat rect1 = Rectangle(uv, vec2(scale.x, scale.y), vec4(blur));",
+            "\tfloat rect2 = Rectangle(uv, vec2(scale.y, scale.x), vec4(blur));",
+            "\treturn max(rect1, rect2);",
+            "}"
+        ],
+        "description": "Draws a band around the uv axis"
+    },
+
+    "Polygon": {
+        "prefix": "Polygon",
+        "body": [
+            "float Polygon(vec2 uv, float radius, float sides, float blur){",
+            "\tfloat angle = atan(uv.x, uv.y);",
+            "\tfloat slice = PI * 2.0 / sides;",
+            "\treturn smoothstep(radius,  radius - blur, cos(floor(0.5 + angle / slice) * slice - angle) * length(uv));",
+            "}"
+        ],
+        "description": "polygon shape"
+    },
+
+    "Scale": {
+        "prefix": "Scale",
+        "body": [
+            "mat2 Scale(vec2 scale){",
+            "\treturn mat2(scale.x, 0.0,",
+            "\t\t\t0.0, scale.y);",
+            "}"
+        ],
+        "description": "scale"
+    },
+
+    "Rotate2D": {
+        "prefix": "Rotate2D",
+        "body": [
+            "mat2 Rotate2D(float angle){",
+            "\treturn mat2(cos(angle), -sin(angle),",
+            "\t\t\t\tsin(angle), cos(angle));",
+            "}"
+        ],
+        "description": "Rotates the given uv space with center alignment"
+    },
+
+    "Tile": {
+        "prefix": "Tile",
+        "body": [
+            "vec2 Tile(vec2 uv, float subdiv){",
+            "\tuv *= subdiv;",
+            "\treturn fract(uv);",
+            "}"
+        ],
+        "description": "Rotates the given uv space with center alignment"
+    },
+
+    "TilesBrick": {
+        "prefix": "TilesBrick",
+        "body": [
+            "vec2 TilesBrick(vec2 uv){",
+            "\tuv.x += step(1., mod(uv.y, 2.)) * 0.5;",
+            "\treturn fract(uv);",
+            "}"
+        ],
+        "description": "Rotates the given uv space with center alignment"
+    },
+
+    "TileRotatePattern": {
+        "prefix": "TileRotatePattern",
+        "body": [
+            "vec2 TileRotatePattern(vec2 uv){",
+            "\tfloat rot = step(1., mod(uv.y, 2.));",
+            "\trot += step(1., mod(uv.x, 2.));",
+            "\trot += 2. * step(1., mod(-uv.y, 2.)) * step(1., mod(uv.x, 2.));",
+            "",
+            "\treturn uv = fract(uv * Rotate2D(PI/2 * rot));",
+            "}"
+        ],
+        "description": "Rotates the given uv space with center alignment"
+    },
+
+    "Aspect ratio": {
+        "prefix": "AspectRatio",
+        "body": [
+            "vec2 AspectRatio(vec2 screen){",
+            "\treturn (2.0 * screen - u_resolution) / u_resolution.y;",
+            "}"
+        ],
+        "description": "Fixes aspect ratio"
+    },
+
+    "Remap": {
+        "prefix": "Remap",
+        "body": [
+            "float Remap(float a, float b, float c, float d, float t){",
+            "\treturn clamp((t-a)/(b-a), 0.0, 1.0) * (d-c) + c;",
+            "}"
+        ],
+        "description": "Scales the function's range to a range = [c, d]"
+    },
+
+    "Remap01": {
+        "prefix": "Remap01",
+        "body": [
+            "float Remap01(float a, float b, float t){",
+            "\treturn clamp((t-a)/(b-a), 0.0, 1.0)",
+            "}"
+        ],
+        "description": "Scales the function's range to a range = [0, 1]"
+    },
+
+    "Within": {
+        "prefix": "Within",
+        "body": [
+            "vec2 Within(vec2 coord, vec4 rect){",
+            "\treturn (coord-rect.xy) / (rect.zw-rect.xy);",
+            "}"
+        ],
+        "description": "Remaps coordinates to a rectangle"
+    },
+
+    "Plot": {
+        "prefix": "Plot",
+        "body": [
+            "float Plot(vec2 coord, float plot){",
+            "\treturn smoothstep(plot - 0.02, plot, coord.y) - smoothstep(plot, plot + 0.02, coord.y);",
+            "}"
+        ],
+        "description": "Returns the graphic representation of the \"y\" coordinate for a function"
+    },
+
+    "Palette": {
+        "prefix": "Palette",
+        "body": [
+            "vec3 Palette(float t){",
+            "\tvec3 a = vec3(0.5, 0.5, 0.5);",
+            "\tvec3 b = vec3(0.5, 0.5, 0.5);",
+            "\tvec3 c = vec3(1.0, 1.0, 1.0);",
+            "\tvec3 d = vec3(0.263, 0.416, 0.557);",
+            "",
+            "\treturn a + b*cos(6.28318 * (c * t + d));",
+            "}"
+        ],
+        "description": "Color palette"
+    },
+
+    "NormalizeRGB": {
+        "prefix": "NormalizeRGB",
+        "body": [
+            "vec3 NormalizeRGB(vec3 color){",
+            "\treturn color / 255.0;",
+            "}"
+        ],
+        "description": "Returns the a color vector with components in the [0, 1] range"
+    },
+
+    "hsb2rgb": {
+        "prefix": "hsb2rgb",
+        "body": [
+            "vec3 hsb2rgb(vec3 c){",
+            "\tvec3 rgb = clamp(abs(mod(c.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0, 0.0, 1.0);",
+            "\trgb = rgb*rgb*(3.0-2.0*rgb);",
+            "\treturn c.z * mix(vec3(1.0), rgb, c.y);",
+            "}"
+        ],
+        "description": "converts a vec3 with hsb color components into an rgb one"
+    },
+
+    "rgb2hsb": {
+        "prefix": "rgb2hsb",
+        "body": [
+            "vec3 rgb2hsb(vec3 c){",
+            "\tvec4 K = vec4(0.0, 1.0/3.0, 2.0/3.0, -1.0);",
+            "\tvec4 p = mix(vec4(c.bg, K.wz), vec4(c.gb, K.xy), step(c.b, c.g));",
+            "\tvec4 q = mix(vec4(p.xyw, c.r), vec4(c.r, p.yzw), step(p.x, c.r));",
+            "",
+            "\tfloat d = q.x - min(q.w, q.y);",
+            "\tfloat e = 1.0e-10;",
+            "",
+            "return vec3(abs(q.z + (q.w - q.y) / (6.0 * d + e)), d / (q.x + e), q.x);",
+            "}"
+        ],
+        "description": "converts a vec3 with rgb color components into an hsb one"
+    },
+
+    "yuv2rgb": {
+        "prefix": "yuv2rgb",
+        "body": [
+            "mat3 yuv2rgb = mat3(1.0, 0.0, 1.13983,",
+            "\t\t\t\t\t1.0, -0.39465, -0.5806,",
+            "\t\t\t\t\t1.0, 2.03211, 0.0);"
+        ],
+        "description": "converts a from YUV to RGB color space"
+    },
+
+    "rgb2yub": {
+        "prefix": "rgb2yub",
+        "body": [
+            "mat3 rgb2yub = mat3(0.2126, 0.7152, 0.0722,",
+            "\t\t\t\t\t-0.09991, -0.33609, 0.43600,",
+            "\t\t\t\t\t0.615, -0.5586, -0.05639);"
+        ],
+        "description": "converts a from RGB to YUV color space"
+    }
+}

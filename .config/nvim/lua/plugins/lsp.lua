@@ -47,6 +47,8 @@ return{
             })
         end
 
+        require'lspconfig'.gdscript.setup{}
+        require'lspconfig'.gdshader_lsp.setup{}
         require('mason').setup({})
         require('mason-lspconfig').setup({
             ensure_installed = {"clangd", "glsl_analyzer", "lua_ls", "pylyzer", "texlab"},

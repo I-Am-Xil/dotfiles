@@ -8,41 +8,41 @@
     "margin-top": 5,
     // Choose the order of the modules
     "modules-left": [
-	"custom/spotify"
-//        "sway/workspaces",
-//        "sway/mode",
-//        "sway/scratchpad",
+        "custom/spotify"
+        //        "sway/workspaces",
+        //        "sway/mode",
+        //        "sway/scratchpad",
     ],
     "modules-center": [
         "clock",
-	""
-//        "sway/window"
+        ""
+        //        "sway/window"
     ],
     "modules-right": [
-//        "mpd",
-//        "idle_inhibitor",
+        //        "mpd",
+        //        "idle_inhibitor",
         "group/audio",
-	"group/internet",
-//        "power-profiles-daemon",
-    	"group/hardware",
-//        "cpu",
-//        "memory",
-//        "temperature",
+        "group/internet",
+        //        "power-profiles-daemon",
+        "group/hardware",
+        //        "cpu",
+        //        "memory",
+        //        "temperature",
         "backlight",
-//        "keyboard-state",
-//        "sway/language",
+        //        "keyboard-state",
+        //        "sway/language",
         "battery",
-//        "battery#bat2",
-//        "tray",
-    	"group/power"
+        //        "battery#bat2",
+        //        "tray",
+        "group/power"
     ],
 
     "group/hardware": {
-	"orientation": "horizontal",
-	"modules": [
-		"cpu",
-		"memory"
-	],
+        "orientation": "horizontal",
+        "modules": [
+            "cpu",
+            "memory"
+        ],
     },
 
     // Modules configuration
@@ -117,7 +117,7 @@
     "tray": {
         //  "icon-size": 21,
         "spacing": 10
-	
+
     },
     "clock": {
         // "timezone": "America/New_York",
@@ -161,25 +161,25 @@
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
         "format-icons": ["", "", "", "", ""],
-	"tooltip": false
+        "tooltip": false
     },
     "battery#bat2": {
-	"format": "{capacity}%"
+        "format": "{capacity}%"
     },
     "power-profiles-daemon": {
-      "format": "{icon}",
-      "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
-      "tooltip": true,
-      "format-icons": {
-        "default": "",
-        "performance": "",
-        "balanced": "",
-        "power-saver": ""
-      }
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default": "",
+            "performance": "",
+            "balanced": "",
+            "power-saver": ""
+        }
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-	
+
         "format-wifi": " ",
         "format-ethernet": " ",
         //"tooltip-format": "{ifname} via {gwaddr} ",
@@ -187,31 +187,31 @@
         "format-linked": " ",
         "format-disabled": " ",
         "format-disconnected": " ",
-	"on-click": "rfkill toggle all"
-//	"on-click": "rfkill toggle all; sleep 1; ~/.config/waybar/custom-network.sh"
+        "on-click": "rfkill toggle all"
+        //	"on-click": "rfkill toggle all; sleep 1; ~/.config/waybar/custom-network.sh"
     },
 
     "network#network2": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-	
+
         "format-ethernet": "{ipaddr}/{cidr}",
         "format-linked": "{ifname} (No IP)",
         "tooltip-format": "{ifname} via {gwaddr} ",
-	"format": "{essid}",
-	"on-click": "rfkill toggle all"
+        "format": "{essid}",
+        "on-click": "rfkill toggle all"
     },
 
     "group/internet": {
-	"orientation": "horizontal",
-	"drawer": {
-		"transition-duration": 500,
-		"children-class": "internet-drawer",
-		"transition-left-to-right": false
-	},
-	"modules": [
-		"network",
-		"network#network2"
-	]
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "internet-drawer",
+            "transition-left-to-right": false
+        },
+        "modules": [
+            "network",
+            "network#network2"
+        ]
     },
 
     "pulseaudio": {
@@ -222,7 +222,7 @@
         "format-icons": {
             "default": ["", "", ""]
         },
-	"tooltip": false,
+        "tooltip": false,
         "on-click": "pavucontrol"
     },
 
@@ -231,21 +231,21 @@
         "format": "{volume}%",
         "format-bluetooth": "{volume}%",
         "format-bluetooth-muted": " ",
-	"tooltip": false,
+        "tooltip": false,
         "on-click": "pavucontrol"
     },
 
     "group/audio": {
-	"orientation": "horizontal",
-	"drawer": {
-		"transition-duration": 500,
-		"children-class": "audio-drawer",
-		"transition-left-to-right": false
-	},
-	"modules": [
-		"pulseaudio",
-		"pulseaudio#audio2"
-	]
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "audio-drawer",
+            "transition-left-to-right": false
+        },
+        "modules": [
+            "pulseaudio",
+            "pulseaudio#audio2"
+        ]
     },
 
     "custom/media": {
@@ -261,65 +261,65 @@
         "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
     "custom/spotify": {
-	  "format": "{icon} {0}",
-	  "escape": true,
-	  "return-type": "json",
-	  "max-length": 40,
-	//  "interval": 30, // Remove this if your script is endless and write in loop
-	  "on-click": "playerctl -p spotify play-pause",
-	  "on-click-right": "killall spotify",
-	  "smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
-	  "on-scroll-up" : "playerctl -p spotify next",
-	  "on-scroll-down" : "playerctl -p spotify previous",
-	  "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null", // Script in resources/custom_modules folder
-	  "exec-if": "pgrep spotify"
+        "format": "{icon} {0}",
+        "escape": true,
+        "return-type": "json",
+        "max-length": 40,
+        //  "interval": 30, // Remove this if your script is endless and write in loop
+        "on-click": "playerctl -p spotify play-pause",
+        "on-click-right": "killall spotify",
+        "smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
+        "on-scroll-up" : "playerctl -p spotify next",
+        "on-scroll-down" : "playerctl -p spotify previous",
+        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null", // Script in resources/custom_modules folder
+        "exec-if": "pgrep spotify"
     },
 
     "group/power": {
-	"orientation": "horizontal",
-	"drawer": {
-		"transition-duration": 500,
-		"children-class": "power-drawer",
-		"transition-left-to-right": false
-	},
-	"modules": [
-		"custom/shutdown",
-		"custom/lock",
-		"custom/reboot"
-	]
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "power-drawer",
+            "transition-left-to-right": false
+        },
+        "modules": [
+            "custom/shutdown",
+            "custom/lock",
+            "custom/reboot"
+        ]
     },
 
     /*
-    "custom/power": {
-        "format" : "⏻",
-		"tooltip": false,
-		"menu": "on-click",
-		"menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
-		"menu-actions": {
-			"shutdown": "shutdown",
-			"reboot": "reboot",
-			"suspend": "systemctl suspend",
-			"hibernate": "systemctl hibernate"
-		}
-    },
-    */
+"custom/power": {
+"format" : "⏻",
+"tooltip": false,
+"menu": "on-click",
+"menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
+"menu-actions": {
+"shutdown": "shutdown",
+"reboot": "reboot",
+"suspend": "systemctl suspend",
+"hibernate": "systemctl hibernate"
+}
+},
+*/
 
     "custom/shutdown": {
         "format" : "⏻ ",
-	"tooltip-format": "Shutdown  ⏻",
-	"tooltip": false,
-	"on-click": "reboot"
+        "tooltip-format": "Shutdown  ⏻",
+        "tooltip": false,
+        "on-click": "reboot"
     },
     "custom/reboot": {
-	"format": "  ",
-	"tooltip-format": "Reboot  ",
-	"tooltip": false,
-	"on-click": "reboot"
+        "format": "  ",
+        "tooltip-format": "Reboot  ",
+        "tooltip": false,
+        "on-click": "reboot"
     },
     "custom/lock": {
-	"format": "  ",
-	"tooltip-format": "Lock  ",
-	"tooltip": false,
-	"on-click": "hyprlock"
+        "format": "  ",
+        "tooltip-format": "Lock  ",
+        "tooltip": false,
+        "on-click": "hyprlock"
     }
 }

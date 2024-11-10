@@ -1,0 +1,24 @@
+#!/bin/bash
+
+
+if (($# == 0))
+then
+    ls ~/Pictures/Wallpapers/ | grep ".mp4" | sed 's/.mp4//'
+    echo $'\nType the name of the wallpaper you want to select:'
+    read wallpaper; #> ~/.wallpaper
+    echo $wallpaper > ~/.config/wallpaper
+fi
+
+
+while getopts "r" flag
+do
+    case "${flag}" in
+        r) 
+            wallpaper=$(<~/.config/wallpaper);;
+        *)
+            break;;
+    esac
+done
+
+killall mpvpaper 2>/dev/null
+mpvpaper -o "no-audio" '*' ~/Pictures/Wallpapers/$wallpaper.mp4 -o "--panscan=1.0 --loop"&

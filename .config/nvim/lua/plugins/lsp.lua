@@ -49,6 +49,8 @@ return{
 
         require'lspconfig'.gdscript.setup{}
         require'lspconfig'.gdshader_lsp.setup{}
+        require'lspconfig'.julials.setup{}
+
         require('mason').setup({})
         require('mason-lspconfig').setup({
             ensure_installed = {"clangd", "glsl_analyzer", "lua_ls", "pylyzer", "texlab"},
@@ -72,7 +74,7 @@ return{
                         capabilities = lsp_capabilities,
                         name = "clangd",
                         initialization_options = {
-                            fallback_flags = {"--std=c99"}
+                            fallback_flags = {"--std=c17"}
                         }
                     })
                 end

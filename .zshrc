@@ -16,6 +16,16 @@ alias ls="ls --color --group-directories-first --sort=version"
 alias la="ls -A"
 alias ll="la -l"
 alias cls="clear; fastfetch"
+alias current="pwd | wl-copy | kitty | wl-paste& disown"
+
+# Yank to the system clipboard
+function vi-yank-wl-copy {
+zle vi-yank;
+echo "$CUTBUFFER" | wl-copy;
+}
+
+zle -N vi-yank-wl-copy
+bindkey -M vicmd 'y' vi-yank-wl-copy
 
 # Flatpak
 alias obs="flatpak run com.obsproject.Studio"

@@ -1,3 +1,3 @@
 return{
-    dir="~/Documents/Code/Lua/Plugin/Plugin.nvim"
+    dir="~/Documents/Code/Lua/Plugin/Stackmap.nvim"
 }

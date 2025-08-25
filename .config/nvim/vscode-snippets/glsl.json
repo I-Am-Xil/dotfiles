@@ -98,87 +98,28 @@
             "\treturn fract(sin(dot(uv.xy, vec2(12.9898, 78.233))) * 43758.5453);",
             "}"
         ],
-        "description": "Random 2D function"
+        "description": "Random 2d function"
     },
 
-    "RandPixel": {
-        "prefix": "RandPixel",
-        "body": [
-            "float RandPixel(vec2 uv, float scale){",
-            "\tuv *= scale;",
-            "\tvec2 ipos = floor(uv);",
-            "\treturn Rand2D(ipos);",
-            "}"
-
-        ],
-        "description": "Random 2D function"
-    },
-
-    "Noise1D_1": {
-        "prefix": "Noise1D_1",
+    "Noise1D": {
+        "prefix": "Noise1D",
         "body": [
             "float Noise1D(float v){",
             "\treturn cos(v + cos(v * 90.1415) * 100.1415) * 0.5 + 0.5;",
             "}"
         ],
-        "description": "1D noise function"
-    },
-
-    "Noise2D_1": {
-        "prefix": "Noise2D_1",
-        "body": [
-            "float Noise2D(vec2 uv){",
-            "\tvec2 ipos = floor(uv);",
-            "\tvec2 fpos = fract(uv);",
-            "",
-            "\tfloat a = Rand2D(ipos);",
-            "\tfloat b = Rand2D(ipos + vec2(1., 0.));",
-            "\tfloat c = Rand2D(ipos + vec2(0., 1.));",
-            "\tfloat d = Rand2D(ipos + vec2(1., 1.));",
-            "",
-            "\tvec2 u = smoothstep(0., 1., fpos);",
-            "",
-            "\treturn mix(a, b, u.x) + (c-a)*u.y*(1.-u.x) + (d-b)*u.x*u.y;",
-            "}"
-        ],
-        "description": "2D value noise function"
-    },
-
-    "PerlinNoise": {
-        "prefix": "PerlinNoise",
-        "body": [
-            "float PerlinNoise(float x){",
-            "\tfloat i = floor(x);",
-            "\tfloat f = fract(x);",
-            "\tfloat noise = mix(Rand(i), Rand(i+1), smoothstep(0., 1., f));",
-            "\treturn noise;",
-            "}"
-        ],
-        "description": "Perlin noise function"
-    },
-
-    "GraphFunction": {
-        "prefix": "GraphFunction",
-        "body": [
-            "float GraphFunction(vec2 uv, float function){",
-            "\tuv.y -= function;",
-            "\tfloat graph = Band(0.05, vec2(0.01), uv.y);",
-            "\treturn graph;",
-            "}"
-        ],
-        "description": "Draws a mathematical function"
+        "description": "noise1d function"
     },
 
     "simple setup": {
         "prefix": "setup",
         "body": [
             "#version 460",
-            "",
             "#ifdef GL",
             "precision mediump float;",
             "#endif",
             "",
-            "layout(location = 0) out vec4 fragColor;",
+            "out vec4 fragColor;",
             "",
             "uniform float u_time;",
             "uniform vec2 u_resolution;",
@@ -186,14 +127,7 @@
             "",
             "void main(){",
             "\tvec2 uv = (2.0 * gl_FragCoord.xy - u_resolution) / u_resolution.y;",
-            "\tfloat shape = 0.0;",
-            "",
-            "\tfloat r = length(uv);",
-            "\tfloat a = atan(uv.y, uv.x);",
-            "\tfloat f = a;",
-            "",
-            "",
-            "\tvec3 color = vec3(shape);",
+            "\tvec3 color = vec3(0.0);",
             "",
             "\tfragColor = vec4(color, 1.0);",
             "}"
@@ -204,8 +138,8 @@
     "Circle": {
         "prefix": "Circle",
         "body": [
-            "float Circle(vec2 uv, float size, float blur){",
-            "\treturn smoothstep(0.0, blur, length(uv) - size);",
+            "float Circle(vec2 uv, float scale, float blur){",
+            "\treturn smoothstep(scale + blur, scale - blur, length(uv));",
             "}"
         ],
         "description": "Draws a circle shape"
@@ -215,79 +149,14 @@
         "prefix": "Circunference",
         "body": [
             "float Circunference(vec2 uv, float scale, float thickness, float blur){",
+
             "\tfloat circunference = Circle(uv, scale, blur);",
             "\tcircunference -= Circle(uv, scale - thickness, blur);",
             "\treturn circunference;",
+
             "}"
         ],
         "description": "Draws a hollow circle shape"
-    },
-
-    "Arc": {
-        "prefix": "Arc",
-        "body": [
-            "float Arc(vec2 uv, vec2 scale, float thickness, vec4 blur){",
-            "\tfloat r = length(uv);",
-            "\tfloat theta = atan(uv.y, uv.x);",
-            "\tuv = vec2(r, theta);",
-
-            "\tfloat arc = Rectangle(uv, scale + vec2(thickness, 0.), blur);",
-            "\tarc -= Rectangle(uv, scale, blur);",
-            "",
-            "\treturn arc;",
-            "}"
-        ],
-        "description": "Draws a circunference section"
-    },
-
-    "Band": {
-        "prefix": "Band",
-        "body": [
-            "float Band(float scale, vec2 blur, float axis){",
-            "\taxis += 0.5;",
-            "\tscale += 0.5;",
-            "\tfloat s1 = smoothstep(scale + blur.x, scale - blur.x, axis);",
-            "\tfloat s2 = smoothstep(scale + blur.y, scale - blur.y, 1.-axis);",
-            "\treturn s1*s2;",
-            "}"
-        ],
-        "description": "Draws a band around the uv axis"
-    },
-
-    "Rectangle": {
-        "prefix": "Rectangle",
-        "body": [
-            "float Rectangle(vec2 uv, vec2 scale, vec4 blur){",
-            "\tfloat xBand = Band(scale.x, blur.xz, uv.x);",
-            "\tfloat yBand = Band(scale.y, blur.yw, uv.y);",
-            "\treturn xBand * yBand;",
-            "}"
-        ],
-        "description": "Draws a rectangle shape"
-    },
-
-    "RectanglePerimeter": {
-        "prefix": "RectanglePerimeter",
-        "body": [
-            "float RectanglePerimeter(vec2 uv, vec2 scale, float thickness, vec4 blur){",
-            "\tfloat rect = Rectangle(uv, scale, blur);",
-            "\trect -= Rectangle(uv, scale - vec2(thickness), blur);",
-            "\treturn rect;",
-            "}"
-        ],
-        "description": "Draws a hollow rectangle shape"
-    },
-
-    "Cross": {
-        "prefix": "Cross",
-        "body": [
-            "float Cross(vec2 uv, vec2 scale, float blur){",
-            "\tfloat rect1 = Rectangle(uv, vec2(scale.x, scale.y), vec4(blur));",
-            "\tfloat rect2 = Rectangle(uv, vec2(scale.y, scale.x), vec4(blur));",
-            "\treturn max(rect1, rect2);",
-            "}"
-        ],
-        "description": "Draws a band around the uv axis"
     },
 
     "Polygon": {

@@ -12,12 +12,7 @@
             {
                 "language": "chuck",
                 "path": "./chuck.json"
-            },
-            {
-                "language": "gdscript",
-                "path": "./gdscript.json"
             }
-
         ]
     }
 }

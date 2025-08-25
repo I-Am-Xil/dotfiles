@@ -21,4 +21,4 @@ do
 done
 
 killall mpvpaper 2>/dev/null
-mpvpaper -o "no-audio" '*' ~/Pictures/Wallpapers/$wallpaper.mp4 -o "--panscan=1.0 --loop"&
+mpvpaper '*' ~/Pictures/Wallpapers/$wallpaper.mp4 -o "--panscan=1.0 --loop --no-audio"&

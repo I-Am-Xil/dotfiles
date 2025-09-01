@@ -1,0 +1,960 @@
+{
+    "int": {
+        "prefix": "int",
+        "body": [
+            "int"
+        ],
+        "description": "signed integer number"
+    },
+
+    "float": {
+        "prefix": "float",
+        "body": [
+            "float"
+        ],
+        "description": "floating point number. In chuck, a float is by default double-precision"
+    },
+
+    "time": {
+        "prefix": "time",
+        "body": [
+            "time"
+        ],
+        "description": "Represents an absolute point in time from the beginning of ChucK time"
+    },
+
+    "dur": {
+        "prefix": "dur",
+        "body": [
+            "dur"
+        ],
+        "description": "Represents a duration with the same logical units as time"
+    },
+
+    "void": {
+        "prefix": "void",
+        "body": [
+            "void"
+        ],
+        "description": "no type"
+    },
+
+    "vec3": {
+        "prefix": "vec3",
+        "body": [
+            "vec3"
+        ],
+        "description": "3D vector (x, y, z) of floats; can also be used as a slew interpolator"
+    },
+
+    "vec4": {
+        "prefix": "vec4",
+        "body": [
+            "vec4"
+        ],
+        "description": "4D vector (x, y, z, w) of floats"
+    },
+
+    "complex": {
+        "prefix": "complex",
+        "body": [
+            "complex"
+        ],
+        "description": "complex number in rectangular form a+bi"
+    },
+
+    "polar": {
+        "prefix": "polar",
+        "body": [
+            "polar"
+        ],
+        "description": "complex number in polar form"
+    },
+
+
+    //BUILT IN CLASSES
+    "Object": {
+        "prefix": "object",
+        "body": [
+            "object"
+        ],
+        "description": "Base classs to al ChucK objects"
+    },
+
+    "Event": {
+        "prefix": "Event",
+        "body": [
+            "Event"
+        ],
+        "description": "ChucK's basic synchronization mechanism; may be extended to create custom Event functionality"
+    },
+
+    "Shred": {
+        "prefix": "Shred",
+        "body": [
+            "Shred"
+        ],
+        "description": "Basic abstraction for a non-prevemptive ChucK process"
+    },
+
+    "UGen": {
+        "prefix": "UGen",
+        "body": [
+            "UGen"
+        ],
+        "description": "Inherits: Object\n\nBase unit generator class"
+    },
+
+    "UGen.buffered": {
+        "prefix": ".buffered",
+        "body": [
+            ".buffered($2)"
+        ],
+        "description": "int buffered(int val) \n\nSet the unit generator's buffered operation mode, typically used externally from hosts that embed ChucK as a component. If true, the UGen stores a buffer of its most recent samples, which can be fetched using global variables in the host language. \n\nIf no value gets passed to the method: \n\nint buffered() \n\nGets the ugen's buffered operation mode."
+    },
+
+    "UGen.chan": {
+        "prefix": ".chan",
+        "body": [
+            ".chan($2)"
+        ],
+        "description": "UGen chan(int num) \n\nGet channel (as a UGen) at specified index."
+    },
+
+    "UGen.channels": {
+        "prefix": ".channels",
+        "body": [
+            ".channels($2)"
+        ],
+        "description": "int channels()\n\nGet number of channels\n\nint channels(int num)\n\nSet number of channels. (currently NOT supported)"
+    },
+
+    "UGen.gain": {
+        "prefix": ".gain",
+        "body": [
+            ".gain($2)"
+        ],
+        "description": "float gain(float val)\n\nSet the gain of the unit generator.\n\nfloat gain()\n\nGet the gain of the unit generator."
+    },
+
+    "UGen.isConnectedTo": {
+        "prefix": ".isConnectedTo",
+        "body": [
+            ".isConnectedTo($2)"
+        ],
+        "description": "int isConnectedTo(UGen rhs)\n\nReturn true if this UGen's output is connected to the input of rhs; if either this UGen or rhs has more than one channel, this function returns true if any connections exist between the channels; return false if there are no connections."
+    },
+
+    "UGen.last": {
+        "prefix": ".last",
+        "body": [
+            ".last($2)"
+        ],
+        "description": "float last()\n\nGet the last sample value of the unit generator."
+    },
+
+    "UGen.op": {
+        "prefix": ".op",
+        "body": [
+            ".op($2)"
+        ],
+        "description": "int op(int val)\n\nSet the unit generator's operation mode. Accepted values are: 1 (sum inputs), 2 (take difference between first input and subsequent inputs), 3 (multiply inputs), 4 (divide first input by subsequent inputs), 0 (do not synthesize audio, output 0) or -1 (passthrough inputs to output).\n\nint op()\n\nGet the unit generator's operation mode."
+    },
+
+    "string": {
+        "prefix": "string",
+        "body": [
+            "string"
+        ],
+        "description": "String of characters"
+    },
+
+
+    //BASIC UNIT GENERATORS
+    "Gain": {
+        "prefix": "Gain",
+        "body": [
+            "Gain"
+        ],
+        "description": "Inherits: UGen : Object\n\nA gain control unit generator. (All unit generators can already change their own gain; this is an explicit way to add multiple outputs together and scale them.)"
+    },
+
+    "Impulse": {
+        "prefix": "Impulse",
+        "body": [
+            "Impulse"
+        ],
+        "description": "Inherits: UGen : Object\n\nAn impulse generator. Can be used to set the value of the next sample; default for each sample is 0 if not set. Additionally, this can be used to generate a digital signal, one sample at a time."
+    },
+
+    "Impulse.next": {
+        "prefix": ".next",
+        "body": [
+            ".next($2)"
+        ],
+        "description": "float next(float next)\n\nSet the value of next sample. (Note: if you are using the UGen.last() method to read the output of the impulse, the value set by Impulse.next() does not appear as the output until after the next sample boundary. In this case, there is a consistent 1::samp offset between setting .next(...) and reading that value using .last().)\n\nfloat next()\n\nGet value of next sample to be generated."
+    },
+
+    "Step": {
+        "prefix": "Step",
+        "body": [
+            "Step"
+        ],
+        "description": "Inherits: UGen : Object\n\nA step generator. Step behaves like Impulse, except that once a next value is set, that value is held for all following samples, until a different value is set."
+    },
+
+    "Step.next": {
+        "prefix": ".next",
+        "body": [
+            ".next($2)"
+        ],
+        "description": "float next(float next)\n\nSet the next step value.\n\nfloat next()\n\nGet the next step value."
+    },
+
+    "SndBuf": {
+        "prefix": "SndBuf",
+        "body": [
+            "SndBuf"
+        ],
+        "description": "Inherits: UGen : Object\n\nAn interpolating sound buffer/player with single-channel output; can read audio data from a variety of uncompressed formats."
+    },
+
+    "SndBuf.channel": {
+        "prefix": ".channel",
+        "body": [
+            ".channel($2)"
+        ],
+        "description": "int channel(int channel)\n\nFor sound file containing more than one channel of audio, select the channel to play.\n\nint channel()\n\nGet the selected chanel of audio this buffer is playing."
+    },
+
+    "SndBuf.channels": {
+        "prefix": ".channels",
+        "body": [
+            ".channels()"
+        ],
+        "description": "int channels()\n\nGet number of channels available in the sound file."
+    },
+
+    "SndBuf.chunks": {
+        "prefix": ".chunks",
+        "body": [
+            ".chunks($2)"
+        ],
+        "description": "int chunks(int frames)\n\nSet chunk size, in frames, for loading the file from disk. Set to 0 to disable chunking.\n\nint chunks()\n\nGet chunk size, in frames, for loading the file from disk. 0 indicates that chunking is disabled."
+    },
+
+    "SndBuf.frames": {
+        "prefix": ".frames",
+        "body": [
+            ".frames()"
+        ],
+        "description": "int frames()\n\nGet total number of sample frames in the file; same as .samples()."
+    },
+
+    "SndBuf.freq": {
+        "prefix": ".freq",
+        "body": [
+            ".freq($2)"
+        ],
+        "description": "float freq(float freq)\n\nSet loop rate (in file loops per second).\n\nfloat freq()\n\nGet loop rate (in file loops per second)."
+    },
+
+    "SndBuf.interp": {
+        "prefix": ".interp",
+        "body": [
+            ".interp($2)"
+        ],
+        "description": "int interp(int interp)\n\nSet interpolation mode: (0) drop sample; (1) linear interpolation; (2) sinc interpolation.\n\nint interp()\n\nGet interpolation mode: (0) drop sample; (1) linear interpolation; (2) sinc interpolation."
+    },
+
+    "SndBuf.length": {
+        "prefix": ".length",
+        "body": [
+            ".length()"
+        ],
+        "description": "dur length()\n\nGet total length of the file as a duration."
+    },
+
+    "SndBuf.loop": {
+        "prefix": ".loop",
+        "body": [
+            ".loop($2)"
+        ],
+        "description": "int loop(int loop)\n\nToggle looping file playback.\n\nint loop()\n\nGet whether file playback is set to loop."
+    },
+
+    "SndBuf.phase": {
+        "prefix": ".phase",
+        "body": [
+            ".phase($2)"
+        ],
+        "description": "float phase(float phase)\n\nSet phase position, normalized to [0,1).\n\nfloat phase()\n\nGet phase position, normalized to [0,1)."
+    },
+
+    "SndBuf.phaseOffset": {
+        "prefix": ".phaseOffset",
+        "body": [
+            ".phaseOffset($2)"
+        ],
+        "description": "float phaseOffset(float value)\n\nAdvance the playhead by the specified phase offset in [0,1), where 0 is no advance and 1 advance the entire length of the file."
+    },
+
+    "SndBuf.play": {
+        "prefix": ".play",
+        "body": [
+            ".play($2)"
+        ],
+        "description": "float play(float play)\n\n(same as .rate)\n\nfloat play()\n\n(same as .rate)"
+    },
+
+    "SndBuf.pos": {
+        "prefix": ".pos",
+        "body": [
+            ".pos($2)"
+        ],
+        "description": "int pos(int pos)\n\nSet play position (between 0 and number of samples).\n\nint pos()\n\nGet play position (between 0 and number of samples)."
+    },
+
+    "SndBuf.rate": {
+        "prefix": ".rate",
+        "body": [
+            ".rate($2)"
+        ],
+        "description": "float rate(float rate)\n\nSet playback rate (relative to file's natural speed). For example, 1.0 is 'normal', 0.5 is half speed, and 2 is twice as fast.\n\nfloat rate()\n\nGet playback rate (relative to file's natural speed). For example, 1.0 is 'normal', 0.5 is half speed, and 2 is twice as fast."
+    },
+
+    "SndBuf.read": {
+        "prefix": ".read",
+        "body": [
+            ".read($2)"
+        ],
+        "description": "string read(string read)\n\nRead file for reading."
+    },
+
+    "SndBuf.ready": {
+        "prefix": ".ready",
+        "body": [
+            ".ready()"
+        ],
+        "description": "int ready()\n\nQuery whether the SndBuf is ready for use (e.g., sound file successfully loaded)."
+    },
+
+    "SndBuf.samples": {
+        "prefix": ".samples",
+        "body": [
+            ".samples()"
+        ],
+        "description": "int samples()\n\nGet total number of sample frames in the file; same as .frames()."
+    },
+
+    "SndBuf.valueAt": {
+        "prefix": ".valueAt",
+        "body": [
+            ".valueAt($2)"
+        ],
+        "description": "float valueAt(int pos)\n\nGet sample value at given position (in samples)."
+    },
+
+    "SndBuf.write": {
+        "prefix": ".write",
+        "body": [
+            ".write($2)"
+        ],
+        "description": "string write(string read)\n\nSet file for writing (currently unsupported)."
+    },
+
+    "SnfBuf2": {
+        "prefix": "SnfBuf2",
+        "body": [
+            "SnfBuf2"
+        ],
+        "description": "Inherits: SndBuf : UGen : Object\n\nAn interpolating sound buffer with two-channel output. Reads from a variety of uncompressed formats."
+    },
+
+    "ADSR": {
+        "prefix": "ADSR",
+        "body": [
+            "ADSR"
+        ],
+        "description": "Inherits: Envelope : UGen : Object\n\nThis Envelope subclass implements a traditional ADSR (Attack, Decay, Sustain, Release) envelope. It responds to simple `keyOn` and `keyOff` messages, keeping track of its state. by Perry R. Cook and Gary P. Scavone, 1995 - 2002."
+    },
+
+    "Envelope": {
+        "prefix": "Envelope",
+        "body": [
+            "Envelope"
+        ],
+        "description": "Inherits: UGen : Object\n\nThis class implements a simple envelope generator which is capable of ramping to a target value by a specified rate. It also responds to simple `keyOn` and `keyOff` messages, ramping to 1.0 on `keyOn` and to 0.0 on `keyOff`. by Perry R. Cook and Gary P. Scavone, 1995 - 2002."
+    },
+
+    "Delay": {
+        "prefix": "Delay",
+        "body": [
+            "Delay"
+        ],
+        "description": "Inherits: UGen : Object\n\nA non-interpolating digital delay-line. A fixed maximum length of 4095 and a delay of zero is set using the default constructor. Alternatively, the delay and maximum length can be set during instantiation with an overloaded constructor. A non-interpolating delay line is typically used in fixed delay-length applications, such as for reverberation. by Perry R. Cook and Gary P. Scavone, 1995 - 2002."
+    },
+
+    "DelayL": {
+        "prefix": "DelayL",
+        "body": [
+            "DelayL"
+        ],
+        "description": "Inherits: UGen : Object\n\nA fractional-length digital delay-line using first-order linear interpolation. A fixed maximum length of 4095 and a delay of zero is set using the default constructor. Alternatively, the delay and maximum length can be set during instantiation with an overloaded constructor. Linear interpolation is an efficient technique for achieving fractional delay lengths, though it does introduce high-frequency signal attenuation to varying degrees depending on the fractional delay setting. The use of higher order Lagrange interpolators can typically improve (minimize) this attenuation characteristic. by Perry R. Cook and Gary P. Scavone, 1995 - 2002."
+    },
+
+    "DelayA": {
+        "prefix": "DelayA",
+        "body": [
+            "DelayA"
+        ],
+        "description": "Inherits: UGen : Object\n\nA fractional-length digital delay-line using a first-order allpass filter. A fixed maximum length of 4095 and a delay of 0.5 is set using the default constructor. Alternatively, the delay and maximum length can be set during instantiation with an overloaded constructor. An allpass filter has unity magnitude gain but variable phase delay properties, making it useful in achieving fractional delays without affecting a signal's frequency magnitude response. In order to achieve a maximally flat phase delay response, the minimum delay possible in this implementation is limited to a value of 0.5. by Perry R. Cook and Gary P. Scavone, 1995 - 2002."
+    },
+
+    "Echo": {
+        "prefix": "Echo",
+        "body": [
+            "Echo"
+        ],
+        "description": "Inherits: UGen : Object\n\nAn echo effect. by Perry R. Cook and Gary P. Scavone, 1995 - 2002."
+    },
+
+    "Noise": {
+        "prefix": "Noise",
+        "body": [
+            "Noise"
+        ],
+        "description": "Inherits: UGen : Object\n\nA white noise generator."
+    },
+
+    "CNoise": {
+        "prefix": "CNoise",
+        "body": [
+            "CNoise"
+        ],
+        "description": "Inherits: UGen : Object\n\nA white noise generator with multiple noise synthesis modes."
+    },
+
+    "Osc": {
+        "prefix": "Osc",
+        "body": [
+            "Osc"
+        ],
+        "description": "Inherits: UGen : Object\n\nBase class for simple oscillator unit generators."
+    },
+
+    "SinOsc": {
+        "prefix": "SinOsc",
+        "body": [
+            "SinOsc"
+        ],
+        "description": "Inherits: Osc : UGen : Object\n\nA sine wave oscillator."
+    },
+
+    "TriOsc": {
+        "prefix": "TriOsc",
+        "body": [
+            "TriOsc"
+        ],
+        "description": "Inherits: Osc : UGen : Object\n\nA triangle wave oscillator."
+    },
+
+    "SawOsc": {
+        "prefix": "SawOsc",
+        "body": [
+            "SawOsc"
+        ],
+        "description": "Inherits: TriOsc : Osc : UGen : Object\n\nA Sawtooth wave oscillator."
+    },
+
+    "PulseOsc": {
+        "prefix": "PulseOsc",
+        "body": [
+            "PulseOsc"
+        ],
+        "description": "Inherits: Osc : UGen : Object\n\nA pulse width oscillator."
+    },
+
+    "SqrOsc": {
+        "prefix": "SqrOsc",
+        "body": [
+            "SqrOsc"
+        ],
+        "description": "Inherits: PulseOsc : Osc : UGen : Object\n\nA square wave oscillator (same as PulseOsc with 0.5 duty cycle)."
+    },
+
+    "Phasor": {
+        "prefix": "Phasor",
+        "body": [
+            "Phasor"
+        ],
+        "description": "Inherits: Osc :UGen : Object\n\nA phasor oscillator; linearly rises from 0 to 1; can be used as a phase control."
+    },
+
+    "HalfRect": {
+        "prefix": "HalfRect",
+        "body": [
+            "HalfRect"
+        ],
+        "description": "Inherits: UGen : Object\n\nA half wave rectifier."
+    },
+
+    "FullRect": {
+        "prefix": "FullRect",
+        "body": [
+            "FullRect"
+        ],
+        "description": "Inherits: UGen : Object\n\nA full wave rectifier."
+    },
+
+    "Chugraph": {
+        "prefix": "Chugraph",
+        "body": [
+            "Chugraph"
+        ],
+        "description": "Inherits: UGen : Object\n\nBase class for subgraph-based user-created in-language unit generators."
+    },
+
+    "Chugen": {
+        "prefix": "Chugen",
+        "body": [
+            "Chugen"
+        ],
+        "description": "Inherits: UGen : Object\n\nBase classs for user-created in-language unit generators."
+    },
+
+    "UGen_Multi": {
+        "prefix": "UGen_Multi",
+        "body": [
+            "UGen_Multi"
+        ],
+        "description": "Inherits: UGen : Object\n\nBase class for multi-channel unit generators."
+    },
+
+    "UGen_Stereo": {
+        "prefix": "UGen_Stereo",
+        "body": [
+            "UGen_Stereo"
+        ],
+        "description": "Inherits: UGen_Multi : UGen : Object\n\nBase class for stereo unit generators."
+    },
+
+    "Mix2": {
+        "prefix": "Mix2",
+        "body": [
+            "Mix2"
+        ],
+        "description": "Inherits: UGen_Stereo : UGen_Multi : UGen : Object\n\nA stereo-to-mono unit generator for mixing stereo signal to mono."
+    },
+
+    "Pan2": {
+        "prefix": "Pan2",
+        "body": [
+            "Pan2"
+        ],
+        "description": "Inherits: UGen_Stereo : UGen_Multi : UGen : Object\n\nA mono-to-stereo unit generator for stereo panning."
+    },
+
+
+    //CONTROL STRUCTURES
+    "if": {
+        "prefix": "if",
+        "body": [
+            "if"
+        ],
+        "description": "if"
+    },
+
+    "else": {
+        "prefix": "else",
+        "body": [
+            "else"
+        ],
+        "description": "else"
+    },
+
+    "while": {
+        "prefix": "while",
+        "body": [
+            "while($2){",
+            "\t",
+            "}"
+        ],
+        "description": "while"
+    },
+
+    "until": {
+        "prefix": "until",
+        "body": [
+            "until"
+        ],
+        "description": "until"
+    },
+
+    "for": {
+        "prefix": "for",
+        "body": [
+            "for(0 => int i; i <= $2; i++){",
+            "\t",
+            "}"
+        ],
+        "description": "for"
+    },
+
+    "repeat": {
+        "prefix": "repeat",
+        "body": [
+            "repeat"
+        ],
+        "description": "repeat"
+    },
+
+    "break": {
+        "prefix": "break",
+        "body": [
+            "break"
+        ],
+        "description": "break"
+    },
+
+    "continue": {
+        "prefix": "continue",
+        "body": [
+            "continue"
+        ],
+        "description": "continue"
+    },
+
+    "return": {
+        "prefix": "return",
+        "body": [
+            "return"
+        ],
+        "description": "return"
+    },
+
+
+    "JCRev": {
+        "prefix": "JCRev",
+        "body": [
+            "JCRev"
+        ],
+        "description": "John Chowning's reverberator class. This class is derived from the CLM NRev function, which is based on the use of networks of simple allpass and comb delay filters. This particular arrangement consists of 6 comb filters in parallel, followed by 3 allpass filters, a lowpass filter, and another allpass in series, followed by two allpass filters in parallel with corresponding right and left outputs. by Perry R. Cook and Gary P. Scavone, 1995 - 2002."
+    },
+
+    "NRev": {
+        "prefix": "NRev",
+        "body": [
+            "NRev"
+        ],
+        "description": "CCRMA's NRev reverberator class. This class is derived from the CLM NRev function, which is based on the use of networks of simple allpass and comb delay filters. This particular arrangement consists of 6 comb filters in parallel, followed by 3 allpass filters, a lowpass filter, and another allpass in series, followed by two allpass filters in parallel with corresponding rightand left outputs. by Perry R. Cook and Gary P. Scavone, 1995 - 2002."
+    },
+
+    "PRCRev": {
+        "prefix": "PRCRev",
+        "body": [
+            "PRCRev"
+        ],
+        "description": "Perry's simple reverberator class. This class is based on some of the famous Stanford/CCRMA reverbs (NRev, KipRev), which were based on the Chowning/Moorer/Schroeder reverberators using networks of simple allpass and comb delay filters. This class implements two series allpass units and two parallel comb filters. by Perry R. Cook and Gary P. Scavone, 1995 - 2002."
+    },
+
+
+    //CLASS KEYWORDS
+    "class": {
+        "prefix": "class",
+        "body": [
+            "class"
+        ],
+        "description": "class"
+    },
+
+    "extends": {
+        "prefix": "extends",
+        "body": [
+            "extends"
+        ],
+        "description": "extends"
+    },
+
+    "public": {
+        "prefix": "public",
+        "body": [
+            "public"
+        ],
+        "description": "public"
+    },
+
+    "static": {
+        "prefix": "static",
+        "body": [
+            "static"
+        ],
+        "description": "static"
+    },
+
+    "pure": {
+        "prefix": "pure",
+        "body": [
+            "pure"
+        ],
+        "description": "pure"
+    },
+
+    "this": {
+        "prefix": "this",
+        "body": [
+            "this"
+        ],
+        "description": "this"
+    },
+
+
+    "function": {
+        "prefix": "function",
+        "body": [
+            "function"
+        ],
+        "description": "function"
+    },
+
+    "fun": {
+        "prefix": "fun",
+        "body": [
+            "fun"
+        ],
+        "description": "fun"
+    },
+
+    "spork": {
+        "prefix": "spork",
+        "body": [
+            "spork"
+        ],
+        "description": "spork"
+    },
+
+    "new": {
+        "prefix": "new",
+        "body": [
+            "new"
+        ],
+        "description": "new"
+    },
+
+    "const": {
+        "prefix": "const",
+        "body": [
+            "const"
+        ],
+        "description": "const"
+    },
+
+    "global": {
+        "prefix": "global",
+        "body": [
+            "global"
+        ],
+        "description": "global"
+    },
+
+
+    "now": {
+        "prefix": "now",
+        "body": [
+            "now"
+        ],
+        "description": "Holds current ChucK time (when read), can be modified to advance time or suspend current processes until a desired time is reached"
+    },
+
+    "true": {
+        "prefix": "true",
+        "body": [
+            "true"
+        ],
+        "description": "true"
+    },
+
+    "false": {
+        "prefix": "false",
+        "body": [
+            "false"
+        ],
+        "description": "false"
+    },
+
+    "maybe": {
+        "prefix": "maybe",
+        "body": [
+            "maybe"
+        ],
+        "description": "maybe"
+    },
+
+    "null": {
+        "prefix": "null",
+        "body": [
+            "null"
+        ],
+        "description": "null"
+    },
+
+    "NULL": {
+        "prefix": "NULL",
+        "body": [
+            "NULL"
+        ],
+        "description": "NULL"
+    },
+
+    "me": {
+        "prefix": "me",
+        "body": [
+            "me"
+        ],
+        "description": "me"
+    },
+
+    "pi": {
+        "prefix": "pi",
+        "body": [
+            "pi"
+        ],
+        "description": "pi"
+    },
+
+
+    "samp": {
+        "prefix": "samp",
+        "body": [
+            "samp"
+        ],
+        "description": "Preset time unit"
+    },
+
+    "ms": {
+        "prefix": "ms",
+        "body": [
+            "ms"
+        ],
+        "description": "Preset time unit"
+    },
+
+    "second": {
+        "prefix": "second",
+        "body": [
+            "second"
+        ],
+        "description": "Preset time unit"
+    },
+
+    "minute": {
+        "prefix": "minute",
+        "body": [
+            "minute"
+        ],
+        "description": "Preset time unit"
+    },
+
+    "hour": {
+        "prefix": "hour",
+        "body": [
+            "hour"
+        ],
+        "description": "Preset time unit"
+    },
+
+    "day": {
+        "prefix": "day",
+        "body": [
+            "day"
+        ],
+        "description": "Preset time unit"
+    },
+
+    "week": {
+        "prefix": "week",
+        "body": [
+            "week"
+        ],
+        "description": "Preset time unit"
+    },
+
+
+    "stdout": {
+        "prefix": "stdout",
+        "body": [
+            "<<<$2>>>;"
+        ],
+        "description": "Debug print syntax"
+    },
+
+
+    "dac": {
+        "prefix": "dac",
+        "body": [
+            "dac"
+        ],
+        "description": "Digital to Analog Converter"
+    },
+
+    "adc": {
+        "prefix": "adc",
+        "body": [
+            "adc"
+        ],
+        "description": "Analog to Digital Converter"
+    },
+
+    "blackhole": {
+        "prefix": "blackhole",
+        "body": [
+            "blackhole"
+        ],
+        "description": "idk yet"
+    },
+
+
+    "Std": {
+        "prefix": "Std",
+        "body": [
+            "Std"
+        ],
+        "description": "ChucK Standard Library. Contains several convenience methods for making your life easier"
+    },
+
+    "Std.mtof": {
+        "prefix": "Std.mtof",
+        "body": [
+            "Std.mtof($2)"
+        ],
+        "description": "Std.mtof(noteNumber) Stands for \"Midi To Frequency\". It returns the frequency corresponding to the midi note number"
+    },
+
+    "Setup": {
+        "prefix": "Setup",
+        "body": [
+            "SinOsc osc => ADSR env1 => dac;",
+            "",
+            "0.25::second => dur beat;",
+            "(1::ms, beat/8, 0, 1::ms) => env1.set;",
+            "0.25 => osc.gain;",
+            "",
+            "[0,4,7] @=> int major[];",
+            "[0,3,7] @=> int minor[];",
+            "",
+            "60 => int offset;",
+            "int position;",
+            "",
+            "for(0 => int i; i < 4; i++){",
+            "\tfor(0 => int j; j < minor.cap(); j++){",
+            "\t\tStd.mtof(minor[j] + offset + position) => osc.freq;",
+            "\t\t1 => env1.keyOn;",
+            "\t\tbeat => now;",
+            "\t}",
+            "}"
+        ],
+        "description": "Simple initial setup"
+    }
+
+
+}

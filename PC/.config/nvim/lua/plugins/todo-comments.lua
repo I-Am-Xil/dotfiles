@@ -12,7 +12,7 @@ return {
                 alt = { "FIXME", "BUG", "FIXIT", "ISSUE", "!"}, -- a set of other keywords that all map to this FIX keywords
                 -- signs = false, -- configure signs for some keywords individually
             },
-            TECH = { icon = "", color = "info", alt = { "TECHNICAL_INFO" } },
+            TECH = { icon = " ", color = "info", alt = { "TECHNICAL_INFO" } },
             TODO = { icon = " ", color = "warning" },
             HACK = { icon = " ", color = "warning" },
             WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
@@ -65,6 +65,7 @@ return {
             pattern = [[\b(KEYWORDS):]], -- ripgrep regex
             -- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
         },
-    }
 
+        vim.keymap.set('n', "<leader>Td", "<cmd>Trouble todo<CR>")
+    }
 }

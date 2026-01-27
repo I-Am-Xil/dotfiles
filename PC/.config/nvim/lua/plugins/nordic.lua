@@ -5,10 +5,8 @@ return{
     config = function()
         require("nordic").setup({
             italic_comments = false,
-            transparent = {
-                bg = true
-            },
+            transparent = { bg = true, float = true},
         })
-        require('nordic').load()
+        require("nordic").load()
     end
 }

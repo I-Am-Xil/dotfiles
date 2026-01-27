@@ -6,12 +6,13 @@ return{
 
         configs.setup({
             auto_install = true,
-            ensure_installed = {
-                "c", "lua", "glsl", "latex", "python", "css", "gdscript", "gdshader", "bash"
-            },
+            ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "heex", "html", "glsl", "latex", "python", "asm", "css", "gdscript", "gdshader", "bash", "css", "javascript", "rust" },
             sync_install = false,
             highlight = { enable = true },
             indent = { enable = true },
         })
+
+        vim.treesitter.language.register("glsl", { "frag" })
+
     end
 }

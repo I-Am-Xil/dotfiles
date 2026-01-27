@@ -1,0 +1,31 @@
+{
+    "move_character": {
+        "prefix": "move_character",
+        "body": [
+            "@export var ACCELERATION = 10",
+            "@export var FRICTION = 50",
+            "@export var MAX_SPEED = 5",
+            "",
+            "func _move_character(delta: float) -> void:",
+            "\tvar direction = Input.get_vector(\"Move_Left\", \"Move_Right\", \"Move_Up\", \"Move_Down\")",
+            "\tvar speed = ACCELERATION",
+            "",
+            "\tif direction == Vector2.ZERO:",
+            "\t\tspeed = FRICTION",
+            "",
+            "\tvelocity.x = move_toward(velocity.x, direction.x*MAX_SPEED, delta*speed)",
+            "\tvelocity.y = move_toward(velocity.y, direction.y*MAX_SPEED, delta*speed)",
+            "\treturn"
+        ],
+        "description": "Basic Character movement template"
+    },
+
+    "sigmoid": {
+        "prefix": "sigmoid",
+        "body": [
+            "func sigmoid(x: float) -> float:",
+            "\treturn 1.0/(1.0 + exp(-x))"
+        ],
+        "description": "Basic Character movement template"
+    }
+}

@@ -2,10 +2,11 @@ return {
     "GCBallesteros/NotebookNavigator.nvim",
     dependencies = {
         "echasnovski/mini.comment",
-        "hkupty/iron.nvim", -- repl provider
+        "Vigemus/iron.nvim", -- repl provider
         -- "akinsho/toggleterm.nvim", -- alternative repl provider
         -- "benlubas/molten-nvim", -- alternative repl provider
         "anuvyklack/hydra.nvim",
+        "GCBallesteros/jupytext.nvim",
     },
 
     keys = {
@@ -17,7 +18,13 @@ return {
 
     event = "VeryLazy",
     config = function()
-        require('notebook-navigator').setup({ activate_hydra_keys = "<leader>h" })
+        require('notebook-navigator').setup({
+            --[[
+                activate_hydra_keys = "<leader>h"
+            --]]
+        })
+
+        require('jupytext').setup()
 
         require('iron.core').setup({
             config = {

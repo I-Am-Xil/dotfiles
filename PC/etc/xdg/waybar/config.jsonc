@@ -28,12 +28,12 @@
         //        "cpu",
         //        "memory",
         //        "temperature",
-        "backlight",
+        //	  "backlight",
         //        "keyboard-state",
         //        "sway/language",
-        "battery",
+        //	  "battery",
         //        "battery#bat2",
-        //        "tray",
+                "tray",
         "group/power"
     ],
 
@@ -181,10 +181,10 @@
         // "interface": "wlp2*", // (Optional) To force the use of this interface
 
         "format-wifi": " ",
-        "format-ethernet": " ",
+        "format-ethernet": "",
         //"tooltip-format": "{ifname} via {gwaddr} ",
         "tooltip-format": "{signalStrength} {bandwidthUpBits} via {gwaddr} ",
-        "format-linked": " ",
+        "format-linked": "",
         "format-disabled": " ",
         "format-disconnected": " ",
         "on-click": "rfkill toggle all"
@@ -305,10 +305,10 @@
 */
 
     "custom/shutdown": {
-        "format" : "⏻ ",
+        "format" : " ",
         "tooltip-format": "Shutdown  ⏻",
         "tooltip": false,
-        "on-click": "reboot"
+        "on-click": "shutdown now"
     },
     "custom/reboot": {
         "format": "  ",

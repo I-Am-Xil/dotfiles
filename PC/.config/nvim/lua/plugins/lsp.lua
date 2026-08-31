@@ -42,29 +42,23 @@ return{
         local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
         local default_setup = function(server)
-            --require('lspconfig')[server].setup({
             vim.lsp.config[server].setup({
                 capabilities = lsp_capabilities,
             })
         end
 
-        -- require'lspconfig'.gdscript.setup{}
-        -- require'lspconfig'.gdshader_lsp.setup{}
-        -- require'lspconfig'.julials.setup{}
-
-        vim.lsp.enable("gdscript")
-        vim.lsp.enable("gdshader_lsp")
-        vim.lsp.enable("julials")
-
+        vim.lsp.enable('gdscript')
+        vim.lsp.enable('gdshader_lsp')
+        vim.lsp.enable('julials')
 
         require('mason').setup({})
         require('mason-lspconfig').setup({
-            ensure_installed = {"clangd", "glsl_analyzer", "lua_ls", "texlab"},
+            ensure_installed = {"clangd", "glsl_analyzer", "lua_ls", "pylyzer", "texlab"},
             auto_install = true,
             handlers = {
                 default_setup,
                 lua_ls = function()
-                    require('lspconfig').lua_ls.setup({
+                    vim.lsp.enable('lua_ls', {
                         capabilities = lsp_capabilities,
                         settings = {
                             Lua = {
@@ -76,7 +70,7 @@ return{
                     })
                 end,
                 clangd = function()
-                    require("lspconfig").clangd.setup({
+                    vim.lsp.enable('clangd', {
                         capabilities = lsp_capabilities,
                         name = "clangd",
                         initialization_options = {

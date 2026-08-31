@@ -17,11 +17,13 @@ alias la="ls -A"
 alias ll="ls -l"
 alias cls="clear; fastfetch"
 alias current="pwd | wl-copy | kitty | wl-paste& disown"
+alias shutdownclean="hyprshutdown -t 'Shutting down...' --post-cmd 'shutdown -P 0'"
+alias rebootclean="hyprshutdown -t 'Shutting down...' --post-cmd 'reboot'"
 
 # Yank to the system clipboard
 function vi-yank-wl-copy {
-zle vi-yank;
-echo "$CUTBUFFER" | wl-copy;
+    zle vi-yank;
+    echo "$CUTBUFFER" | wl-copy;
 }
 
 zle -N vi-yank-wl-copy

@@ -308,13 +308,13 @@
         "format" : " ",
         "tooltip-format": "Shutdown  ⏻",
         "tooltip": false,
-        "on-click": "shutdownclean"
+        "on-click": "hyprshutdown -t 'Shutting down...' --post-cmd 'shutdown -P 0'"
     },
     "custom/reboot": {
         "format": "  ",
         "tooltip-format": "Reboot  ",
         "tooltip": false,
-        "on-click": "rebootclean"
+        "on-click": "hyprshutdown -t 'Shutting down...' --post-cmd 'reboot'"
     },
     "custom/lock": {
         "format": "  ",

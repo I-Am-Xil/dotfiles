@@ -29,6 +29,23 @@ function vi-yank-wl-copy {
 zle -N vi-yank-wl-copy
 bindkey -M vicmd 'y' vi-yank-wl-copy
 
+
+#unzip to dir
+function unzipd(){
+    if [ -f "$1" ]
+    then
+        ls | grep "$1"
+        mkdir ${1%.zip}
+        mv ./"$1" ./"${1%.zip}"
+        cd ${1%.zip}
+        unzip "$1"
+        mv ./"$1" ./..
+    else
+        echo "No command-line argument given"
+    fi
+}
+
+
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 setopt autocd
